@@ -5,7 +5,7 @@ const models = require('../db');
 const router = express.Router();
 
 
-const conn = mysql.createConnection(models.mysql);
+const pool = mysql.createPool(models.mysql);
 
 
 const toHump = function (name) {
@@ -35,17 +35,15 @@ const jsonWrite = function (res, ret) {
 
 router.get('/blog/description', function (req, res) {
   const sql = frontSql.blogs.query;
-  conn.connect();
-  conn.query(sql, function (error, result) {
+  pool.query(sql, function (error, result) {
     if (error) {
       console.log(error);
+      return;
     }
     if (result) {
       jsonWrite(res, result);
     }
-    conn.destroy();
   })
 });
-
 
 module.exports = router;
