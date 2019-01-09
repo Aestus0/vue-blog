@@ -1,18 +1,21 @@
 <template>
   <div id="app">
-    <header-top></header-top>
-    <img src="./assets/logo.png">
+
+    <!--<img src="./assets/logo.png">-->
     <router-view/>
   </div>
 </template>
 
 <script>
-import headerTop from './components/headTop';
+import 'animate.css';
 
 export default {
   name: 'App',
+  data() {
+    return {
+    };
+  },
   components: {
-    headerTop,
   },
 };
 </script>

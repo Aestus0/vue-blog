@@ -1,9 +1,11 @@
 <template>
-  <header v-bind:class="[headerClass]">
-    <span class="logo">{{myBlog}}</span>
-    <div>
-      <router-link to="/other">首页</router-link>
-    </div>
+  <header :style="{height: '200px',background: 'url('+ back +') center','background-size': '100%'}">
+    <transition name="fade">
+      <div :class="['nav','nav-background']" v-if="isShow">
+        <router-link class="router-link" to="/about">关于</router-link>
+        <router-link class="router-link" to="/">首页</router-link>
+      </div>
+    </transition>
   </header>
 </template>
 
@@ -11,30 +13,60 @@
 export default {
   name: 'HeadTop',
   components: ['routerLink'],
+  props: ['back'],
   data() {
     return {
-      headerClass: 'header',
-      myBlog: '黄田阳个人博客',
+      isShow: true,
     };
+  },
+  created() {
+    this.scroll();
+  },
+  methods: {
+    scroll() {
+      let initialTop = window.pageYOffset ||
+          document.documentElement.scrollTop || document.body.scrollTop || 0;
+      window.onscroll = () => {
+        const currentTop = window.pageYOffset ||
+            document.documentElement.scrollTop || document.body.scrollTop || 0;
+        const delta = currentTop - initialTop;
+        initialTop = currentTop;
+        this.isShow = delta < 0;
+      };
+    },
   },
 };
 </script>
 
 <style scoped>
-  .header {
-    /*background-color: red;*/
-    height: 60px;
-    background-color: black;
-    opacity: 0.9;
-    line-height: 60px;
+
+  .nav {
+    position: fixed;
+    top: 0;
+    float: right;
+    width: 100%;
   }
 
-  .logo {
-    float: left;
-    margin-left: 30px;
-    color: #00A7EB;
-    font: 22px;
-    font-weight: bold;
-    cursor: pointer;
+  .nav-background {
+    background-color: #fff;
+    opacity: .5;
   }
+
+  .router-link {
+    color: #000;
+    float: right;
+    margin-right: 10px;
+  }
+
+  .router-link:hover {
+    color: #fff;
+  }
+
+  .fade-enter-active, .fade-leave-active {
+    transition: opacity .5s;
+  }
+  .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+    opacity: 0;
+  }
+
 </style>
