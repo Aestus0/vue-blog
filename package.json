@@ -19,6 +19,8 @@
     "element-ui": "^2.4.8",
     "es6-promise": "^4.2.5",
     "express": "^4.16.4",
+    "less": "^3.9.0",
+    "less-loader": "^4.1.0",
     "mysql": "^2.16.0",
     "stylus": "^0.54.5",
     "stylus-loader": "^3.0.2",
